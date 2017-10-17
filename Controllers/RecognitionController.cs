@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 using Microsoft.AspNetCore.Http;
 using FaceApi.Services;
+using Models;
 
 namespace FaceApi.Controllers
 {
@@ -20,7 +21,7 @@ namespace FaceApi.Controllers
     public RecognitionController(FaceAPI face) => this.face = face;
 
     [HttpPut("groups/{personGroupId}")]
-    public Object CreateGroup(string personGroupId, string name) => face.CreateFaceGroup(personGroupId, name);
+    public Object CreateGroup(string personGroupId, [FromBody] Group group) => face.CreateFaceGroup(personGroupId, group.name);
 
     [HttpDelete("groups/{personGroupId}")]
     public Object DeleteGroup(string personGroupId) => face.DeleteFaceGroup(personGroupId);
@@ -33,6 +34,7 @@ namespace FaceApi.Controllers
 
     [HttpDelete("persons/{personGroupId}/{personId}")]
     public Object DeletePerson(string personGroupId, string personId) => face.DeletePerson(personGroupId, personId);
+
     [HttpGet("persons/{personGroupId}")]
     public Object GetPersons(string personGroupId) => face.GetPersons(personGroupId);
 

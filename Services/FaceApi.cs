@@ -55,7 +55,8 @@ namespace FaceApi.Services
       HttpResponseMessage response;
 
       // Request body
-      byte[] byteData = Encoding.UTF8.GetBytes("{''name'':" + name + "}");
+      string json = "{\"name\": \"" + name + "\" }";
+      byte[] byteData = Encoding.UTF8.GetBytes(json);
 
       using (var content = new ByteArrayContent(byteData))
       {
