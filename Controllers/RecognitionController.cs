@@ -28,5 +28,13 @@ namespace FaceApi.Controllers
     [HttpGet("groups")]
     public Object GetGroups() => face.GetFaceGroups();
 
+    [HttpPost("persons/{personGroupId}/{personId}")]
+    public Object CreatePerson(string personGroupId, string personId) => face.CreatePerson(personGroupId, personId);
+
+    [HttpDelete("persons/{personGroupId}/{personId}")]
+    public Object DeletePerson(string personGroupId, string personId) => face.DeletePerson(personGroupId, personId);
+    [HttpGet("persons/{personGroupId}")]
+    public Object GetPersons(string personGroupId) => face.GetPersons(personGroupId);
+
   }
 }

@@ -15,7 +15,7 @@ namespace FaceApi.Services
     // **********************************************
 
     // Replace the subscriptionKey string value with your valid subscription key.
-    const string subscriptionKey = "5b7dd67e01aa4ac6bf766bcc556c5744";
+    const string subscriptionKey = "3e1606fa44d54913ac984e2351938e10";
 
     // Replace or verify the region.
     //
@@ -25,7 +25,7 @@ namespace FaceApi.Services
     //
     // NOTE: Free trial subscription keys are generated in the westcentralus region, so if you are using
     // a free trial subscription key, you should not need to change this region.
-    const string uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/";
+    const string uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0";
 
 
     // static void Main()
@@ -50,7 +50,7 @@ namespace FaceApi.Services
       // Request headers
       client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
 
-      var uri = uriBase + "persongroups/" + personGroupId;
+      var uri = uriBase + "/persongroups/" + personGroupId;
 
       HttpResponseMessage response;
 
@@ -74,7 +74,7 @@ namespace FaceApi.Services
       // Request headers
       client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
 
-      var uri = uriBase + "persongroups/" + personGroupId;
+      var uri = uriBase + "/persongroups/" + personGroupId;
 
       HttpResponseMessage response = await client.DeleteAsync(uri);
 
@@ -94,11 +94,67 @@ namespace FaceApi.Services
       // Request parameters
       queryString["start"] = "{string}";
       queryString["top"] = "1000";
-      var uri = uriBase + "persongroups";
+      var uri = uriBase + "/persongroups";
 
       response = await client.GetAsync(uri);
       // Get the JSON response.
       return await response.Content.ReadAsStringAsync();
+    }
+
+    public async Task<Object> CreatePerson(string personGroupId, string person_name)
+    {
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      var uri = uriBase + "/persongroups/" + personGroupId + "/persons";
+
+      HttpResponseMessage response;
+
+      // Request body
+      byte[] byteData = Encoding.UTF8.GetBytes("{''name'':" + person_name + "}");
+
+      using (var content = new ByteArrayContent(byteData))
+      {
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        response = await client.PostAsync(uri, content);
+        return await response.Content.ReadAsStringAsync();
+      }
+    }
+
+    public async Task<Object> DeletePerson(string personGroupId, string personId)
+    {
+
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      var uri = uriBase + "/persongroups/" + personGroupId + "/persons/" + personId;
+      var response = await client.DeleteAsync(uri);
+      return await response.Content.ReadAsStringAsync();
+    }
+
+    public async Task<Object> GetPersons(string personGroupId)
+    {
+
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      // Request parameters
+      queryString["start"] = "{string}";
+      queryString["top"] = "1000";
+      var uri = uriBase + "/persongroups/" + personGroupId + "/persons";
+
+      var response = await client.GetAsync(uri);
+      return await response.Content.ReadAsStringAsync();
+
     }
 
     string JsonPrettyPrint(string json)
