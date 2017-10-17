@@ -1,0 +1,10 @@
+/home/agustin/Desarrollo/Facultad/FaceApi/bin/Debug/netcoreapp2.0/FaceApi.deps.json
+/home/agustin/Desarrollo/Facultad/FaceApi/bin/Debug/netcoreapp2.0/FaceApi.runtimeconfig.json
+/home/agustin/Desarrollo/Facultad/FaceApi/bin/Debug/netcoreapp2.0/FaceApi.runtimeconfig.dev.json
+/home/agustin/Desarrollo/Facultad/FaceApi/bin/Debug/netcoreapp2.0/FaceApi.dll
+/home/agustin/Desarrollo/Facultad/FaceApi/bin/Debug/netcoreapp2.0/FaceApi.pdb
+/home/agustin/Desarrollo/Facultad/FaceApi/obj/Debug/netcoreapp2.0/FaceApi.csproj.CoreCompileInputs.cache
+/home/agustin/Desarrollo/Facultad/FaceApi/obj/Debug/netcoreapp2.0/FaceApi.AssemblyInfoInputs.cache
+/home/agustin/Desarrollo/Facultad/FaceApi/obj/Debug/netcoreapp2.0/FaceApi.AssemblyInfo.cs
+/home/agustin/Desarrollo/Facultad/FaceApi/obj/Debug/netcoreapp2.0/FaceApi.dll
+/home/agustin/Desarrollo/Facultad/FaceApi/obj/Debug/netcoreapp2.0/FaceApi.pdb
