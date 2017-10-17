@@ -115,7 +115,8 @@ namespace FaceApi.Services
       HttpResponseMessage response;
 
       // Request body
-      byte[] byteData = Encoding.UTF8.GetBytes("{''name'':" + person_name + "}");
+      string json = "{\"name\": \"" + person_name + "\" }";
+      byte[] byteData = Encoding.UTF8.GetBytes(json);
 
       using (var content = new ByteArrayContent(byteData))
       {
@@ -158,6 +159,81 @@ namespace FaceApi.Services
 
     }
 
+    public async Task<Object> AddFace(string personGroupId, string personId, string url)
+    {
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      var uri = uriBase + "/persongroups/" + personGroupId + "/persons/" + personId + "/persistedFaces";
+
+      HttpResponseMessage response;
+
+      // Request body
+      string json = "{\"url\": \"" + url + "\" }";
+      byte[] byteData = Encoding.UTF8.GetBytes(json);
+
+      using (var content = new ByteArrayContent(byteData))
+      {
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        response = await client.PostAsync(uri, content);
+        return await response.Content.ReadAsStringAsync();
+      }
+    }
+
+    public async Task<Object> DeleteFace(string personGroupId, string personId, string faceId)
+    {
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      var uri = uriBase + "/persongroups/" + personGroupId + "/persons/" + personId + "/persistedFaces/" + faceId;
+
+      var response = await client.DeleteAsync(uri);
+      return await response.Content.ReadAsStringAsync();
+
+    }
+    public async Task<Object> GetFace(string personGroupId, string personId, string faceId)
+    {
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      var uri = uriBase + "/persongroups/" + personGroupId + "/persons/" + personId + "/persistedFaces/" + faceId;
+
+      var response = await client.GetAsync(uri);
+      return await response.Content.ReadAsStringAsync();
+
+    }
+    public async Task<Object> TrainPersonGroup(string personGroupId)
+    {
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      var uri = uriBase + "/persongroups/" + personGroupId + "/train";
+
+      HttpResponseMessage response;
+
+      // Request body
+      byte[] byteData = Encoding.UTF8.GetBytes("{body}");
+
+      using (var content = new ByteArrayContent(byteData))
+      {
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        response = await client.PostAsync(uri, content);
+        return await response.Content.ReadAsStringAsync();
+      }
+
+    }
     string JsonPrettyPrint(string json)
     {
       if (string.IsNullOrEmpty(json))

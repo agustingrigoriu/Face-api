@@ -5,4 +5,9 @@ namespace Models
   {
     public string name { get; set; }
   }
+
+  public class Face
+  {
+    public string url { get; set; }
+  }
 }
