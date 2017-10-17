@@ -32,7 +32,7 @@ namespace FaceApi.Controllers
     [HttpGet("groups")]
     public Object GetGroups() => face.GetFaceGroups();
 
-    //Creo una persona indicando el grupo al que pertenecerá y un identificador
+    //Creo una persona indicando el grupo al que pertenecerá y un identificador/Nombre. Devuelve su identificador único
     [HttpPost("persons/{personGroupId}/{personId}")]
     public Object CreatePerson(string personGroupId, string personId) => face.CreatePerson(personGroupId, personId);
 
