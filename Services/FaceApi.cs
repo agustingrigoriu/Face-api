@@ -159,7 +159,7 @@ namespace FaceApi.Services
 
     }
 
-    public async Task<Object> AddFace(string personGroupId, string personId, string url)
+    public async Task<Object> AddFace(string personGroupId, string personId, Stream s)
     {
       var client = new HttpClient();
       var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -172,12 +172,12 @@ namespace FaceApi.Services
       HttpResponseMessage response;
 
       // Request body
-      string json = "{\"url\": \"" + url + "\" }";
+      string json = "{\"url\": \"" + s + "\" }";
       byte[] byteData = Encoding.UTF8.GetBytes(json);
 
       using (var content = new ByteArrayContent(byteData))
       {
-        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
         response = await client.PostAsync(uri, content);
         return await response.Content.ReadAsStringAsync();
       }
