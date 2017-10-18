@@ -34,27 +34,28 @@ namespace FaceApi.Controllers
     public Object GetGroups() => face.GetFaceGroups();
 
     //Creo una persona indicando el grupo al que pertenecerá y un identificador/Nombre. Devuelve su identificador único
-    [HttpPost("persons/{personGroupId}/{personId}")]
+    [HttpPost("people/{personGroupId}/{personId}")]
     public Object CreatePerson(string personGroupId, string personId) => face.CreatePerson(personGroupId, personId);
 
     //Elimino a una persona dentro de un grupo
-    [HttpDelete("persons/{personGroupId}/{personId}")]
+    [HttpDelete("people/{personGroupId}/{personId}")]
     public Object DeletePerson(string personGroupId, string personId) => face.DeletePerson(personGroupId, personId);
 
     //Obtengo el listado de personas de un grupo
-    [HttpGet("persons/{personGroupId}")]
+    [HttpGet("people/{personGroupId}")]
     public Object GetPersons(string personGroupId) => face.GetPersons(personGroupId);
 
     //Agrego una cara/imagen a una persona indicando el grupo, la persona y enviando la url de la imágen
-    [HttpPost("face/{personGroupId}/{personId}")]
-    public Object AddFace(string personGroupId, string personId, Face fa)
-    {
+    [HttpPost("faces/{personGroupId}/{personId}")]
+    public Object AddFace(string personGroupId, string personId, Face fa) => face.AddFace(personGroupId, personId, fa.url);
 
-    
-        return face.AddFace(personGroupId, personId, fa.url);
-     
+    //Agrego una cara/imagen a una persona indicando el grupo, la persona y enviando la url de la imágen
+    [HttpDelete("faces/{personGroupId}/{personId}/{faceId}")]
+    public Object DeleteFace(string personGroupId, string personId, string faceId) => face.DeleteFace(personGroupId, personId, faceId);
 
-    }
+    //Agrego una cara/imagen a una persona indicando el grupo, la persona y enviando la url de la imágen
+    [HttpGet("faces/{personGroupId}/{personId}/{faceId}")]
+    public Object GetFace(string personGroupId, string personId, string faceId) => face.GetFace(personGroupId, personId, faceId);
 
   }
 }
