@@ -11,6 +11,7 @@ using System.Data.Common;
 using Microsoft.AspNetCore.Http;
 using FaceApi.Services;
 using Models;
+using System.IO;
 
 namespace FaceApi.Controllers
 {
@@ -22,7 +23,7 @@ namespace FaceApi.Controllers
 
     //Creo un grupo de personas, se indica en la url el identificador de ese grupo. Ej: visitas, se envía también un name o nombre por JSON
     [HttpPut("groups/{personGroupId}")]
-    public Object CreateGroup(string personGroupId, [FromBody] Group group) => face.CreateFaceGroup(personGroupId, group.name);
+    public Object CreateGroup(string personGroupId, Group group) => face.CreateFaceGroup(personGroupId, group.name);
 
     //Elimino el grupo a través de su identificador
     [HttpDelete("groups/{personGroupId}")]
@@ -46,7 +47,14 @@ namespace FaceApi.Controllers
 
     //Agrego una cara/imagen a una persona indicando el grupo, la persona y enviando la url de la imágen
     [HttpPost("face/{personGroupId}/{personId}")]
-    public Object AddFace(string personGroupId, string personId, [FromBody] Face fa) => face.AddFace(personGroupId, personId, fa.url);
+    public Object AddFace(string personGroupId, string personId, Face fa)
+    {
+
+    
+        return face.AddFace(personGroupId, personId, fa.url);
+     
+
+    }
 
   }
 }

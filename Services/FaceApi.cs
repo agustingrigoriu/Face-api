@@ -159,7 +159,7 @@ namespace FaceApi.Services
 
     }
 
-    public async Task<Object> AddFace(string personGroupId, string personId, Stream s)
+    public async Task<Object> AddFace(string personGroupId, string personId, string url)
     {
       var client = new HttpClient();
       var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -172,14 +172,24 @@ namespace FaceApi.Services
       HttpResponseMessage response;
 
       // Request body
-      string json = "{\"url\": \"" + s + "\" }";
-      byte[] byteData = Encoding.UTF8.GetBytes(json);
+      // Request body. Posts a locally stored JPEG image.
+      byte[] byteData = GetImageAsByteArray(url);
 
-      using (var content = new ByteArrayContent(byteData))
+      using (ByteArrayContent content = new ByteArrayContent(byteData))
       {
+        // This example uses content type "application/octet-stream".
+        // The other content types you can use are "application/json" and "multipart/form-data".
         content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+        // Execute the REST API call.
         response = await client.PostAsync(uri, content);
+
+        // Get the JSON response.
         return await response.Content.ReadAsStringAsync();
+
+        // Display the JSON response.
+        // Console.WriteLine("\nResponse:\n");
+        // Console.WriteLine(JsonPrettyPrint(contentString));
       }
     }
 
@@ -294,6 +304,13 @@ namespace FaceApi.Services
       }
 
       return sb.ToString().Trim();
+    }
+
+    byte[] GetImageAsByteArray(string imageFilePath)
+    {
+      FileStream fileStream = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read);
+      BinaryReader binaryReader = new BinaryReader(fileStream);
+      return binaryReader.ReadBytes((int)fileStream.Length);
     }
   }
 }
