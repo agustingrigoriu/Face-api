@@ -45,7 +45,7 @@ namespace FaceApi.Controllers
     public Object GetPersons(string personGroupId) => face.GetPersons(personGroupId);
 
     //Agrego una cara/imagen a una persona indicando el grupo, la persona y enviando la url de la imágen
-    [HttpGet("face/{personGroupId}/{personId}")]
+    [HttpPost("face/{personGroupId}/{personId}")]
     public Object AddFace(string personGroupId, string personId, [FromBody] Face fa) => face.AddFace(personGroupId, personId, fa.url);
 
   }
