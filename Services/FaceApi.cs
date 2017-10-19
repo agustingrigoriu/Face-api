@@ -234,7 +234,7 @@ namespace FaceApi.Services
       HttpResponseMessage response;
 
       // Request body
-      byte[] byteData = Encoding.UTF8.GetBytes("{body}");
+      byte[] byteData = Encoding.UTF8.GetBytes("{}");
 
       using (var content = new ByteArrayContent(byteData))
       {
@@ -242,8 +242,85 @@ namespace FaceApi.Services
         response = await client.PostAsync(uri, content);
         return await response.Content.ReadAsStringAsync();
       }
+    }
+
+    public async Task<Object> TrainGroupStatus(string personGroupId)
+    {
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      var uri = uriBase + "/persongroups/" + personGroupId + "/training";
+
+      var response = await client.GetAsync(uri);
+      return await response.Content.ReadAsStringAsync();
 
     }
+
+    public async Task<Object> IdentifyFace(string personGroupId)
+    {
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      var uri = uriBase + "/identify";
+
+      HttpResponseMessage response;
+
+      // Request body
+      byte[] byteData = Encoding.UTF8.GetBytes("{body}");
+
+      using (var content = new ByteArrayContent(byteData))
+      {
+        content.Headers.ContentType = new MediaTypeHeaderValue("< your content type, i.e. application/json >");
+        response = await client.PostAsync(uri, content);
+        return await response.Content.ReadAsStringAsync();
+      }
+    }
+
+    public async Task<Object> DetectFace(string url)
+    {
+      var client = new HttpClient();
+      var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+      // Request headers
+      client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+      // Request parameters
+      queryString["returnFaceId"] = "true";
+      queryString["returnFaceLandmarks"] = "true";
+      queryString["returnFaceAttributes"] = "age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise";
+      var uri =  uriBase + "/detect?" + queryString;
+
+      HttpResponseMessage response;
+
+      // Request body
+      // Request body. Posts a locally stored JPEG image.
+      byte[] byteData = GetImageAsByteArray(url);
+
+      using (ByteArrayContent content = new ByteArrayContent(byteData))
+      {
+        // This example uses content type "application/octet-stream".
+        // The other content types you can use are "application/json" and "multipart/form-data".
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+        // Execute the REST API call.
+        response = await client.PostAsync(uri, content);
+
+        // Get the JSON response.
+        return await response.Content.ReadAsStringAsync();
+
+        // Display the JSON response.
+        // Console.WriteLine("\nResponse:\n");
+        // Console.WriteLine(JsonPrettyPrint(contentString));
+      }
+    }
+
+
     string JsonPrettyPrint(string json)
     {
       if (string.IsNullOrEmpty(json))

@@ -49,13 +49,25 @@ namespace FaceApi.Controllers
     [HttpPost("faces/{personGroupId}/{personId}")]
     public Object AddFace(string personGroupId, string personId, Face fa) => face.AddFace(personGroupId, personId, fa.url);
 
-    //Agrego una cara/imagen a una persona indicando el grupo, la persona y enviando la url de la imágen
+    //Elimino una cara/imagen a una persona indicando el grupo, la persona y enviando la url de la imágen
     [HttpDelete("faces/{personGroupId}/{personId}/{faceId}")]
     public Object DeleteFace(string personGroupId, string personId, string faceId) => face.DeleteFace(personGroupId, personId, faceId);
 
-    //Agrego una cara/imagen a una persona indicando el grupo, la persona y enviando la url de la imágen
+    //Obtengo una cara/imagen a una persona indicando el grupo, la persona y enviando la url de la imágen
     [HttpGet("faces/{personGroupId}/{personId}/{faceId}")]
     public Object GetFace(string personGroupId, string personId, string faceId) => face.GetFace(personGroupId, personId, faceId);
+
+    //Entreno a un grupo
+    [HttpPost("groups/train/{personGroupId}")]
+    public Object TrainGroup(string personGroupId) => face.TrainPersonGroup(personGroupId);
+
+    //Detecto una cara, es necesario para obtener el ID q voy a utilizar en otros métodos
+    [HttpPost("detect")]
+    public Object DetectFace(Face fa) => face.DetectFace(fa.url);
+
+    //Obtengo el estado de entrenamiento de un grupo
+    [HttpGet("groups/train/{personGroupId}")]
+    public Object TrainGroupStatus(string personGroupId) => face.TrainGroupStatus(personGroupId);
 
   }
 }
