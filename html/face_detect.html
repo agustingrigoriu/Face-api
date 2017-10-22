@@ -18,7 +18,7 @@
     <div class="well">
       <h1 class="semi-bold">Selección de Imagen</h1>
       <p>
-        A continuación ingrese la url de la imagen de la cual desea obtener información a través de la API de Azure (Face API).
+        A continuación seleccione la imagen de la cual desea obtener información a través de la API de Azure (Face API).
       </p>
 
       <input id="imgUpload" type="file">
@@ -74,7 +74,7 @@
 
               <fieldset>
                 <div class="row">
-                  <section class="col col-3">
+                  <section class="col col-2">
 
                   </section>
                   <section class="col col-5">
@@ -131,19 +131,19 @@
               <header>
                 Resultados
               </header>
-
               <fieldset>
+								<section>
+									<label class="label">JSON</label>
+									<label class="textarea">
+										<textarea id="results" rows="20" class="custom-scroll" readonly></textarea>
+									</label>
+									<!-- <div class="note">
+										<strong>Note:</strong> height of the textarea depends on the rows attribute.
+									</div> -->
+								</section>
 
-                <div class="row">
-                  <section class="col col-12">
-                    <label class="label">Resultados</label>
-                      <textarea id="results" rows="3"></textarea>
-                 
-                  </section>
-                </div>
-                
-              </fieldset>
-
+							</fieldset>
+        
             </form>
 
           </div>

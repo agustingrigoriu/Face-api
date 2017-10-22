@@ -16,9 +16,9 @@
           // alert(parseBinary(e.target.result));
           img.attr('src', e.target.result);
           var imageParsedBinary = parseBinary(e.target.result);
+          $.when(detectFace(imageParsedBinary)).then(function(data) {
+            $('#results').val(JSON.stringify(data, null, 2));
 
-          $.when(detectFace(imageParsedBinary)).done(function(data){
-            $('#results').val(data);
           });
         };
       }
