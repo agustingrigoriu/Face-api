@@ -18,10 +18,9 @@
  * - CUSTOM STYLES
  */
 
-
 /* enable absolute positioning */
-.inner-addon { 
-  position: relative; 
+.inner-addon {
+  position: relative;
 }
 
 /* style icon */
@@ -33,13 +32,20 @@
 }
 
 /* align icon */
-.left-addon .glyphicon  { left:  3px;}
-.right-addon .glyphicon { right: 0px;}
+.left-addon .glyphicon {
+  left: 3px;
+}
+.right-addon .glyphicon {
+  right: 0px;
+}
 
 /* add padding  */
-.left-addon input  { padding-left:  24px; }
-.right-addon input { padding-right: 30px; }
-
+.left-addon input {
+  padding-left: 24px;
+}
+.right-addon input {
+  padding-right: 30px;
+}
 
 .modal-backdrop.in {
   opacity: 0;
@@ -57,7 +63,6 @@ table tbody td {
   cursor: default;
 }
 
-
 /* Se elimina el efecto "fade" en las ventanas modal */
 .modal.fade .modal-dialog {
   -webkit-transform: translate(0, -0%);
@@ -70,13 +75,13 @@ table tbody td {
 }
 
 .modal_height {
-    height: 300px;
+  height: 300px;
 }
 
 @media (max-width: 320px) {
   .modal_height {
-    height: 150px; 
-  } 
+    height: 150px;
+  }
 }
 
 .table > tbody > tr.active > td {
@@ -95,8 +100,8 @@ table tbody td {
 }
 
 a:hover {
-  cursor:pointer;
- }
+  cursor: pointer;
+}
 
 /* 
  .chart {
@@ -131,8 +136,8 @@ a:hover {
 
 .box-shadow::after {
   -webkit-box-shadow: inset -25px 0px 25px -25px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow:    inset -25px 0px 25px -25px rgba(0, 0, 0, 0.6);
-  box-shadow:         inset -25px 0px 25px -25px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: inset -25px 0px 25px -25px rgba(0, 0, 0, 0.6);
+  box-shadow: inset -25px 0px 25px -25px rgba(0, 0, 0, 0.6);
   bottom: 0;
   left: 0;
   right: 0;
@@ -152,9 +157,13 @@ a:hover {
   width: auto;
 }
 
-.imageBorder
-{
-    border-width: 2px;
-    border-color: Black;
-    padding: 5px 0px;
+.imgContainer {
+  height: 650px;
+}
+
+img {
+  display: block;
+  margin: auto;
+  padding: auto;
+  width: 40%;
 }
