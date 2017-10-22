@@ -6,6 +6,8 @@
   };
 
   var setupEvents = function() {
+    $('#loadingButton').hide();
+
     $("#detect").click(function() {
       var file = $("#imgUpload")[0].files[0];
       var img = $("#img");
@@ -13,12 +15,16 @@
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(e) {
-          // alert(parseBinary(e.target.result));
+          $('#loadingButton').show();
+          $('#detect').hide();
+
           img.attr('src', e.target.result);
           var imageParsedBinary = parseBinary(e.target.result);
           $.when(detectFace(imageParsedBinary)).then(function(data) {
             $('#results').val(JSON.stringify(data, null, 2));
-
+            $('#loadingButton').hide();
+            $('#detect').show();
+  
           });
         };
       }
