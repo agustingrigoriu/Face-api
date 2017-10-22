@@ -6,25 +6,37 @@
   };
 
   var setupEvents = function() {
-    $('#loadingButton').hide();
+    //Escondo botón de loading
+    $("#loadingButton").hide();
 
-    $("#detect").click(function() {
+    //Cargo la foto en pantalla al seleccionarla
+    $("#imgUpload").change(function() {
       var file = $("#imgUpload")[0].files[0];
       var img = $("#img");
       if (file) {
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(e) {
-          $('#loadingButton').show();
-          $('#detect').hide();
+          img.attr("src", e.target.result);
+        };
+      }
+    });
 
-          img.attr('src', e.target.result);
+    //Evento de click en botón Detect, se obtienen las imagenes y se envía a la función correspondiente de azure
+    $("#detect").click(function() {
+      var file = $("#imgUpload")[0].files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+          $("#loadingButton").show();
+          $("#detect").hide();
+
           var imageParsedBinary = parseBinary(e.target.result);
           $.when(detectFace(imageParsedBinary)).then(function(data) {
-            $('#results').val(JSON.stringify(data, null, 2));
-            $('#loadingButton').hide();
-            $('#detect').show();
-  
+            $("#results").val(JSON.stringify(data, null, 2));
+            $("#loadingButton").hide();
+            $("#detect").show();
           });
         };
       }

@@ -14,7 +14,7 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-12">
+  <article class="col-sm-12 col-md-12 col-lg-6">
     <div class="well">
       <h1 class="semi-bold">Selección de Imagen</h1>
       <p>
@@ -31,7 +31,53 @@
       </p>
 
     </div>
-  </div>
+  </article>
+
+   <!-- NEW COL START -->
+   <article class="col-sm-12 col-md-12 col-lg-6">
+    
+          <!-- Widget ID (each widget will need unique ID)-->
+          <div class="jarviswidget" id="wid-id-0" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false"
+            data-widget-editbutton="false" data-widget-custombutton="false" data-widget-togglebutton="false">
+    
+            <header>
+              <span class="widget-icon">
+                <i class="fa fa-info"></i>
+              </span>
+              <h2>Imagen Seleccionada </h2>
+    
+            </header>
+    
+            <!-- widget div-->
+            <div>
+    
+              <!-- widget edit box -->
+              <div class="jarviswidget-editbox">
+                <!-- This area used as dropdown edit box -->
+    
+              </div>
+              <!-- end widget edit box -->
+    
+              <!-- widget content -->
+              <div class="widget-body no-padding">
+    
+                <div style="text-align: center; padding: 10px 0px;">
+    
+                  <img src="img/user.svg" id="img" alt="Face" height="350" width="300">
+                </div>
+    
+    
+              </div>
+              <!-- end widget content -->
+    
+            </div>
+            <!-- end widget div -->
+    
+          </div>
+          <!-- end widget -->
+    
+        </article>
+        <!-- END COL -->
 </div>
 
 
@@ -40,66 +86,7 @@
 
   <div class="row">
 
-    <!-- NEW COL START -->
-    <article class="col-sm-12 col-md-12 col-lg-5">
-
-      <!-- Widget ID (each widget will need unique ID)-->
-      <div class="jarviswidget" id="wid-id-0" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false"
-        data-widget-editbutton="false" data-widget-custombutton="false" data-widget-togglebutton="false">
-
-        <header>
-          <span class="widget-icon">
-            <i class="fa fa-info"></i>
-          </span>
-          <h2>Imagen Seleccionada </h2>
-
-        </header>
-
-        <!-- widget div-->
-        <div>
-
-          <!-- widget edit box -->
-          <div class="jarviswidget-editbox">
-            <!-- This area used as dropdown edit box -->
-
-          </div>
-          <!-- end widget edit box -->
-
-          <!-- widget content -->
-          <div class="widget-body no-padding">
-
-            <div class="smart-form">
-              <header>
-                Imagen
-              </header>
-
-              <fieldset>
-                <div class="row">
-                  <section class="col col-2">
-
-                  </section>
-                  <section class="col col-5">
-
-                    <img class="imageBorder" src="img/user.png" id="img" alt="Face" height="350" width="300">
-
-                  </section>
-                </div>
-
-
-
-            </div>
-
-          </div>
-          <!-- end widget content -->
-
-        </div>
-        <!-- end widget div -->
-
-      </div>
-      <!-- end widget -->
-
-    </article>
-    <!-- END COL -->
+   
 
     <article class="col-sm-12 col-md-12 col-lg-7">
 
@@ -133,18 +120,18 @@
                 Resultados
               </header>
               <fieldset>
-								<section>
-									<label class="label">JSON</label>
-									<label class="textarea">
-										<textarea id="results" rows="20" class="custom-scroll" readonly></textarea>
-									</label>
-									<!-- <div class="note">
+                <section>
+                  <label class="label">JSON</label>
+                  <label class="textarea">
+                    <textarea id="results" rows="20" class="custom-scroll" readonly></textarea>
+                  </label>
+                  <!-- <div class="note">
 										<strong>Note:</strong> height of the textarea depends on the rows attribute.
 									</div> -->
-								</section>
+                </section>
 
-							</fieldset>
-        
+              </fieldset>
+
             </form>
 
           </div>
