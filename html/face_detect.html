@@ -13,82 +13,93 @@
 
 </div>
 
-<div class="row">
-  <article class="col-sm-12 col-md-12 col-lg-6">
-    <div class="well">
-      <h1 class="semi-bold">Selección de Imagen</h1>
-      <p>
-        A continuación seleccione la imagen de la cual desea obtener información a través de la API de Azure (Face API).
-      </p>
+<section id="widget-grid" class="">
 
-      <input id="imgUpload" type="file">
+  <div class="row">
+    <article class="col-sm-12 col-md-12 col-lg-6">
+      <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-12">
+          <div class="well">
+            <h1 class="semi-bold">Selección de Imagen</h1>
+            <p>
+              A continuación seleccione la imagen de la cual desea obtener información a través de la API de Azure (Face API).
+            </p>
 
-      <p style="text-align: center;">
-        <button type="submit" class="btn btn-primary btn-lg " id="detect">
-          Detectar
-        </button>
-        <i id="loadingButton" class="fa fa-gear fa-4x fa-spin"></i>
-      </p>
+            <input id="imgUpload" type="file">
 
-    </div>
-  </article>
+            <p style="text-align: center;">
+              <button type="submit" class="btn btn-primary btn-lg " id="detect">
+                Detectar
+              </button>
+              <i id="loadingButton" class="fa fa-gear fa-4x fa-spin"></i>
+            </p>
+          </div>
+        </article>
+      </div>
 
-   <!-- NEW COL START -->
-   <article class="col-sm-12 col-md-12 col-lg-6">
-    
+
+      <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-12">
+
           <!-- Widget ID (each widget will need unique ID)-->
           <div class="jarviswidget" id="wid-id-0" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false"
             data-widget-editbutton="false" data-widget-custombutton="false" data-widget-togglebutton="false">
-    
+
             <header>
               <span class="widget-icon">
                 <i class="fa fa-info"></i>
               </span>
-              <h2>Imagen Seleccionada </h2>
-    
+              <h2>Resultados </h2>
+
             </header>
-    
+
             <!-- widget div-->
             <div>
-    
+
               <!-- widget edit box -->
               <div class="jarviswidget-editbox">
                 <!-- This area used as dropdown edit box -->
-    
+
               </div>
               <!-- end widget edit box -->
-    
+
               <!-- widget content -->
-              <div class="widget-body no-padding">
-    
-                <div style="text-align: center; padding: 10px 0px;">
-    
-                  <img src="img/user.svg" id="img" alt="Face" height="350" width="300">
-                </div>
-    
-    
+              <div class="widget-body">
+
+                <form action="" class="smart-form">
+                  <header>
+                    Resultados
+                  </header>
+                  <fieldset>
+                    <section>
+                      <label class="label">JSON</label>
+                      <label class="textarea">
+                        <textarea id="results" rows="20" class="custom-scroll" readonly></textarea>
+                      </label>
+                      <!-- <div class="note">
+                                <strong>Note:</strong> height of the textarea depends on the rows attribute.
+                              </div> -->
+                    </section>
+
+                  </fieldset>
+
+                </form>
+
               </div>
               <!-- end widget content -->
-    
+
             </div>
             <!-- end widget div -->
-    
+
           </div>
           <!-- end widget -->
-    
+
         </article>
-        <!-- END COL -->
-</div>
+      </div>
+    </article>
 
-
-
-<section id="widget-grid" class="">
-
-  <div class="row">
-
-   
-
-    <article class="col-sm-12 col-md-12 col-lg-7">
+    <!-- NEW COL START -->
+    <article class="col-sm-12 col-md-12 col-lg-6">
 
       <!-- Widget ID (each widget will need unique ID)-->
       <div class="jarviswidget" id="wid-id-0" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false"
@@ -98,7 +109,7 @@
           <span class="widget-icon">
             <i class="fa fa-info"></i>
           </span>
-          <h2>Resultados </h2>
+          <h2>Imagen Seleccionada </h2>
 
         </header>
 
@@ -115,24 +126,11 @@
           <!-- widget content -->
           <div class="widget-body no-padding">
 
-            <form action="" class="smart-form">
-              <header>
-                Resultados
-              </header>
-              <fieldset>
-                <section>
-                  <label class="label">JSON</label>
-                  <label class="textarea">
-                    <textarea id="results" rows="20" class="custom-scroll" readonly></textarea>
-                  </label>
-                  <!-- <div class="note">
-										<strong>Note:</strong> height of the textarea depends on the rows attribute.
-									</div> -->
-                </section>
+            <div style="text-align: center; padding: 10px 20px;">
 
-              </fieldset>
+              <img src="img/user.svg" id="img" alt="Face" height="350" width="300">
+            </div>
 
-            </form>
 
           </div>
           <!-- end widget content -->
@@ -144,10 +142,11 @@
       <!-- end widget -->
 
     </article>
-
+    <!-- END COL -->
   </div>
 
 </section>
+
 
 <script>
   pageSetUp();
