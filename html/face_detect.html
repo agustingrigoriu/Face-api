@@ -1,0 +1,171 @@
+<div class="row">
+
+  <!-- col -->
+  <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+    <h1 class="page-title txt-color-blueDark">
+
+      <!-- PAGE HEADER -->
+      <i class="glyphicon glyphicon-user"></i> Detección de Rostro
+    </h1>
+  </div>
+  <!-- end col -->
+
+
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="well">
+      <h1 class="semi-bold">Selección de Imagen</h1>
+      <p>
+        A continuación ingrese la url de la imagen de la cual desea obtener información a través de la API de Azure (Face API).
+      </p>
+
+      <input id="imgUpload" type="file">
+
+      <p style="text-align: center;">
+        <button type="submit" class="btn btn-primary btn-lg" id="detect">
+          Detectar
+        </button>
+      </p>
+
+    </div>
+  </div>
+</div>
+
+
+
+<section id="widget-grid" class="">
+
+  <div class="row">
+
+    <!-- NEW COL START -->
+    <article class="col-sm-12 col-md-12 col-lg-5">
+
+      <!-- Widget ID (each widget will need unique ID)-->
+      <div class="jarviswidget" id="wid-id-0" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false"
+        data-widget-editbutton="false" data-widget-custombutton="false" data-widget-togglebutton="false">
+
+        <header>
+          <span class="widget-icon">
+            <i class="fa fa-info"></i>
+          </span>
+          <h2>Imagen Seleccionada </h2>
+
+        </header>
+
+        <!-- widget div-->
+        <div>
+
+          <!-- widget edit box -->
+          <div class="jarviswidget-editbox">
+            <!-- This area used as dropdown edit box -->
+
+          </div>
+          <!-- end widget edit box -->
+
+          <!-- widget content -->
+          <div class="widget-body no-padding">
+
+            <div class="smart-form">
+              <header>
+                Imagen
+              </header>
+
+              <fieldset>
+                <div class="row">
+                  <section class="col col-3">
+
+                  </section>
+                  <section class="col col-5">
+
+                    <img class="imageBorder" src="img/user.png" id="img" alt="Face" height="350" width="300">
+
+                  </section>
+                </div>
+
+
+
+            </div>
+
+          </div>
+          <!-- end widget content -->
+
+        </div>
+        <!-- end widget div -->
+
+      </div>
+      <!-- end widget -->
+
+    </article>
+    <!-- END COL -->
+
+    <article class="col-sm-12 col-md-12 col-lg-7">
+
+      <!-- Widget ID (each widget will need unique ID)-->
+      <div class="jarviswidget" id="wid-id-0" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false"
+        data-widget-editbutton="false" data-widget-custombutton="false" data-widget-togglebutton="false">
+
+        <header>
+          <span class="widget-icon">
+            <i class="fa fa-info"></i>
+          </span>
+          <h2>Resultados </h2>
+
+        </header>
+
+        <!-- widget div-->
+        <div>
+
+          <!-- widget edit box -->
+          <div class="jarviswidget-editbox">
+            <!-- This area used as dropdown edit box -->
+
+          </div>
+          <!-- end widget edit box -->
+
+          <!-- widget content -->
+          <div class="widget-body no-padding">
+
+            <form action="" class="smart-form">
+              <header>
+                Resultados
+              </header>
+
+              <fieldset>
+
+                <div class="row">
+                  <section class="col col-12">
+                    <label class="label">Resultados</label>
+                      <textarea id="results" rows="3"></textarea>
+                 
+                  </section>
+                </div>
+                
+              </fieldset>
+
+            </form>
+
+          </div>
+          <!-- end widget content -->
+
+        </div>
+        <!-- end widget div -->
+
+      </div>
+      <!-- end widget -->
+
+    </article>
+
+  </div>
+
+</section>
+
+<script>
+  pageSetUp();
+
+  loadScript("js/controllers/face_detect.js", function () {
+    FaceDetect.init();
+  });
+
+</script>

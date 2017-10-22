@@ -1,0 +1,160 @@
+/*
+ * It is advised not to edit the smartadmin_production.css
+ * as this will override any changes you make in the 
+ * later versions of this theme. 
+ * 
+ * We advise that you use use this CSS to override 
+ * SmartAdmin styles. 
+ * 
+ * Rename the stylesheet to whatever your liking so it will stay
+ * unique to you with each update of SmartAdmin.
+ */
+
+/*
+ * INDEX
+ * 
+ * - HTML
+ * - BODY
+ * - CUSTOM STYLES
+ */
+
+
+/* enable absolute positioning */
+.inner-addon { 
+  position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  top: 6px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  3px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  24px; }
+.right-addon input { padding-right: 30px; }
+
+
+.modal-backdrop.in {
+  opacity: 0;
+}
+
+body.modal-open {
+  overflow: auto !important;
+}
+
+fieldset {
+  padding-top: 0px !important;
+}
+
+table tbody td {
+  cursor: default;
+}
+
+
+/* Se elimina el efecto "fade" en las ventanas modal */
+.modal.fade .modal-dialog {
+  -webkit-transform: translate(0, -0%);
+  -ms-transform: translate(0, -0%);
+  transform: translate(0, -0%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -moz-transition: -moz-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+}
+
+.modal_height {
+    height: 300px;
+}
+
+@media (max-width: 320px) {
+  .modal_height {
+    height: 150px; 
+  } 
+}
+
+.table > tbody > tr.active > td {
+  background-color: #abb3c9;
+}
+
+.error-class {
+  color: red;
+}
+
+.table-toolbar {
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+a:hover {
+  cursor:pointer;
+ }
+
+/* 
+ .chart {
+  position: relative;
+  display: inline-block;
+  width: 110px;
+  height: 110px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+.chart canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.percent {
+  display: inline-block;
+  line-height: 110px;
+  z-index: 2;
+}
+.percent:after {
+  content: '%';
+  margin-left: 0.1em;
+  font-size: .8em;
+} */
+
+.box-shadow {
+  position: relative;
+  text-align: center;
+}
+
+.box-shadow::after {
+  -webkit-box-shadow: inset -25px 0px 25px -25px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow:    inset -25px 0px 25px -25px rgba(0, 0, 0, 0.6);
+  box-shadow:         inset -25px 0px 25px -25px rgba(0, 0, 0, 0.6);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  content: "";
+  display: block;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  margin-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.box-shadow img {
+  max-width: 100%;
+  width: auto;
+}
+
+.imageBorder
+{
+    border-width: 2px;
+    border-color: Black;
+    padding: 5px 0px;
+}
