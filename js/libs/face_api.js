@@ -90,7 +90,8 @@ function trainingStatusGroup(personGroupId) {
   });
 }
 
-function createPerson(data) {
+function createPerson(personGroupId, data) {
+  console.log(data);
   return $.ajax({
     url: urlBase + "persongroups/" + personGroupId + "/persons",
     beforeSend: function(xhrObj) {
@@ -102,9 +103,14 @@ function createPerson(data) {
   });
 }
 
-function deletePerson(personId) {
+function deletePerson(data) {
   return $.ajax({
-    url: urlBase + "persongroups/" + personGroupId + "/persons/" + personId,
+    url:
+      urlBase +
+      "persongroups/" +
+      data.personGroupId +
+      "/persons/" +
+      data.personId,
     beforeSend: function(xhrObj) {
       xhrObj.setRequestHeader("Content-Type", "application/json");
       xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
@@ -113,7 +119,7 @@ function deletePerson(personId) {
   });
 }
 
-function modifyPerson(data) {
+function modifyPerson(personGroupId, personId, data) {
   return $.ajax({
     url: urlBase + "persongroups/" + personGroupId + "/persons/" + personId,
     beforeSend: function(xhrObj) {
