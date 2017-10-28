@@ -70,6 +70,15 @@ function deleteGroup(personGroupId) {
   });
 }
 
+function trainGroup(personGroupId) {
+  return $.ajax({
+    url: urlBase + "persongroups/" + personGroupId + "/train",
+    beforeSend: function(xhrObj) {
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "POST"
+  });
+}
 //Funciones extra
 var parseBinary = function(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string

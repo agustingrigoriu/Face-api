@@ -90,20 +90,24 @@
       Groups.showDialogModifyGroup(data[0], callBack);
     });
 
-    $("#modifyServer").click(function() {
+    $("#trainGroup").click(function() {
       var callBack = function() {
-        refreshServersTable();
+        refreshGroupsTable();
       };
-      var data = $("#servers-table").tabulator("getSelectedData");
-      Dashboard.showDialogModifyServer(data[0], callBack);
-    });
 
-    $("#deleteServer").click(function() {
-      var callBack = function() {
-        refreshServersTable();
-      };
-      var data = $("#servers-table").tabulator("getSelectedData");
-      Dashboard.showDialogDeleteServer(data[0], callBack);
+      var data = $("#groups-table").tabulator("getSelectedData");
+
+      $.when(trainGroup(data[0].personGroupId)).then(
+        function(d) {
+          alert("Entrenando", "Train", 30000, "green", "fa fa-check");
+          dialog.close();
+          callBackOnSuccess();
+        },
+        function(xhr) {
+          alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+          dialog.close();
+        }
+      );
     });
   };
 
@@ -122,6 +126,8 @@
     $("#modifyGroup").prop("disabled", true);
     $("#deleteGroup").addClass("disabled");
     $("#deleteGroup").prop("disabled", true);
+    $("#trainGroup").addClass("disabled");
+    $("#trainGroup").prop("disabled", true);
   };
 
   var rowSelectedGroup = function() {
@@ -129,6 +135,8 @@
     $("#modifyGroup").prop("disabled", false);
     $("#deleteGroup").removeClass("disabled");
     $("#deleteGroup").prop("disabled", false);
+    $("#trainGroup").removeClass("disabled");
+    $("#trainGroup").prop("disabled", false);
   };
 
   var alert = function(msg, title, timeout, color, icon) {
