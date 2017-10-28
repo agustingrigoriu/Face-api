@@ -11,6 +11,8 @@
   var initializeGroupsTabulator = function() {
     var table = $("#groups-table");
 
+    $("#people-table").addClass('tabulator-load-msg');
+
     table.tabulator({
       headerFilterPlaceholder: "",
       selectable: 1,
@@ -48,10 +50,11 @@
       },
       rowClick: function(e, row) {
         var d = row.row.data;
+        
         $.when(getPeople(d.personGroupId)).then(function(data) {
           $("#countPeople").html('<i class="fa fa-users"></i> ' + data.length);
           $("#people-table").tabulator("setData", data);
-          $("#actualPersonGroupId").val(d.personGroupId);
+          $("#actualPersonGroupId").val(d.personGroupId.toUpperCase());
         });
       }
     });
@@ -59,6 +62,7 @@
     $.when(getGroups()).then(function(data) {
       $("#countGroups").html('<i class="fa fa-users"></i> ' + data.length);
       table.tabulator("setData", data);
+      $("#people-table").removeClass('tabulator-loading');
     });
   };
 
