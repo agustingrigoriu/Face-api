@@ -89,6 +89,71 @@ function trainingStatusGroup(personGroupId) {
     type: "GET"
   });
 }
+
+function createPerson(data) {
+  return $.ajax({
+    url: urlBase + "persongroups/" + personGroupId + "/persons",
+    beforeSend: function(xhrObj) {
+      xhrObj.setRequestHeader("Content-Type", "application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "POST",
+    data: JSON.stringify(data)
+  });
+}
+
+function deletePerson(personId) {
+  return $.ajax({
+    url: urlBase + "persongroups/" + personGroupId + "/persons/" + personId,
+    beforeSend: function(xhrObj) {
+      xhrObj.setRequestHeader("Content-Type", "application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "DELETE"
+  });
+}
+
+function modifyPerson(data) {
+  return $.ajax({
+    url: urlBase + "persongroups/" + personGroupId + "/persons/" + personId,
+    beforeSend: function(xhrObj) {
+      xhrObj.setRequestHeader("Content-Type", "application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "PATCH",
+    data: JSON.stringify(data)
+  });
+}
+
+function getPeople(personGroupId) {
+  return $.ajax({
+    url: urlBase + "persongroups/" + personGroupId + "/persons",
+    beforeSend: function(xhrObj) {
+      xhrObj.setRequestHeader("Content-Type", "application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "GET"
+  });
+}
+
+function addFace(data, img) {
+  return $.ajax({
+    url:
+      urlBase +
+      "persongroups/" +
+      data.personGroupId +
+      "/persons/" +
+      data.personId +
+      "persistedFaces",
+    beforeSend: function(xhrObj) {
+      xhrObj.setRequestHeader("Content-Type", "application/octet-stream");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "POST",
+    data: img
+  });
+}
+
 //Funciones extra
 var parseBinary = function(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string

@@ -4,7 +4,7 @@
 
   Groups.init = function() {
     initializeGroupsTabulator();
-    // initializePeopleTabulator();
+    initializePeopleTabulator();
     setupEvents();
   };
 
@@ -45,19 +45,67 @@
       },
       rowDeselected: function(row) {
         rowDeselectedGroup();
+      },
+      rowClick: function(e, row) {
+        var d = row.row.data;
+        $.when(getPeople(d.personGroupId)).then(function(data) {
+          $("#countPeople").html('<i class="fa fa-users"></i> ' + data.length);
+          $("#people-table").tabulator("setData", data);
+          $("#actualPersonGroupId").val(d.personGroupId);
+        });
       }
     });
 
     $.when(getGroups()).then(function(data) {
-      $("#countGroups").html('<i class="fa fa-user"></i> ' + data.length);
+      $("#countGroups").html('<i class="fa fa-users"></i> ' + data.length);
       table.tabulator("setData", data);
+    });
+  };
+
+  var initializePeopleTabulator = function() {
+    var table = $("#people-table");
+
+    table.tabulator({
+      headerFilterPlaceholder: "",
+      selectable: 1,
+      height: "155px",
+      layout: "fitColumns",
+      responsiveLayout: true,
+      tooltips: true,
+      tooltipsHeader: true,
+      movableCols: false,
+      columns: [
+        {
+          title: "ID",
+          field: "personId",
+          sorter: "string",
+          headerFilter: false
+        },
+        {
+          title: "Name",
+          field: "name",
+          sorter: "string",
+          headerFilter: false
+        },
+        {
+          title: "User Data",
+          field: "userData",
+          sorter: "string",
+          headerFilter: false
+        }
+      ],
+      rowSelected: function(row) {
+        rowSelectedPeople();
+      },
+      rowDeselected: function(row) {
+        rowDeselectedPeople();
+      }
     });
   };
 
   var setupEvents = function() {
     $(window).resize(function() {
       $(".tabulator").tabulator("redraw");
-      refreshImagesGraph();
     });
 
     $("#btnRefreshGroups").click(function() {
@@ -134,7 +182,7 @@
   //******************************FUNCIONES******************************
 
   var refreshGroupsTable = function() {
-    table = $("#groups-table");
+    var table = $("#groups-table");
     $.when(getGroups()).then(function(data) {
       $("#countGroups").html('<i class="fa fa-user"></i> ' + data.length);
       table.tabulator("setData", data);
@@ -187,7 +235,7 @@
           class: "btn btn-success",
           label: "Aceptar",
           action: function(dialog) {
-            data = {};
+            var data = {};
             data.name = $("#name").val();
             data.personGroupId = $("#personGroupId").val();
             data.userData = $("#userData").val();
@@ -240,7 +288,170 @@
           class: "btn btn-success",
           label: "Aceptar",
           action: function(dialog) {
-            data = {};
+            var data = {};
+            data.name = $("#name").val();
+            data.personGroupId = $("#personGroupId").val();
+            data.userData = $("#userData").val();
+            console.log(data);
+            $.when(modifyGroup(data)).then(
+              function(d) {
+                alert(
+                  "Modificado",
+                  "Modificar Grupo",
+                  30000,
+                  "green",
+                  "fa fa-check"
+                );
+                dialog.close();
+                callBackOnSuccess();
+              },
+              function(xhr) {
+                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+                dialog.close();
+              }
+            );
+          }
+        },
+        {
+          class: "btn btn-danger",
+          label: "Cancelar",
+          action: function(dialog) {
+            dialog.close();
+          }
+        }
+      ]
+    });
+  };
+
+  // Eliminar Grupo ------------------------------------------------------------
+  Groups.showDialogDeleteGroup = function(data, callBackOnSuccess) {
+    BootstrapDialog.show({
+      title: "Eliminar Grupo",
+      draggable: true,
+      type: BootstrapDialog.TYPE_DANGER,
+      size: BootstrapDialog.SIZE_NORMAL,
+      message: $('<div id="eliminar_grupo"></div>').load(
+        "html/dlg_modGroups.html"
+      ),
+      onshown: function(dialog) {
+        $("#personGroupId").addClass("disabled");
+        $("#personGroupId").prop("disabled", true);
+        $("#name").addClass("disabled");
+        $("#name").prop("disabled", true);
+        $("#userData").addClass("disabled");
+        $("#userData").prop("disabled", true);
+        $("#personGroupId").val(data.personGroupId);
+        $("#name").val(data.name);
+        $("#userData").val(data.userData);
+      },
+      onhidden: function(dialog) {
+        //
+      },
+      buttons: [
+        {
+          class: "btn btn-success",
+          label: "Eliminar",
+          action: function(dialog) {
+            var personGroupId = $("#personGroupId").val();
+            $.when(deleteGroup(personGroupId)).then(
+              function(d) {
+                alert(
+                  "Eliminación exitosa",
+                  "Eliminar Grupo",
+                  30000,
+                  "green",
+                  "fa fa-check"
+                );
+                dialog.close();
+                callBackOnSuccess();
+              },
+              function(xhr) {
+                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+                dialog.close();
+              }
+            );
+          }
+        },
+        {
+          class: "btn btn-danger",
+          label: "Cancelar",
+          action: function(dialog) {
+            dialog.close();
+          }
+        }
+      ]
+    });
+  };
+
+
+  // Agregar Persona ------------------------------------------------------------
+  Groups.showDialogNewPerson = function(callBackOnSuccess) {
+    BootstrapDialog.show({
+      title: "Nueva Persona",
+      draggable: true,
+      size: BootstrapDialog.SIZE_NORMAL,
+      message: $('<div id="new_person"></div>').load("html/dlg_modPeople.html"),
+      onshown: function(dialog) {},
+      onhidden: function(dialog) {},
+      buttons: [
+        {
+          class: "btn btn-success",
+          label: "Aceptar",
+          action: function(dialog) {
+            var data = {};
+            data.name = $("#name").val();
+            data.personId = $("#personId").val();
+            data.userData = $("#userData").val();
+            $.when(createPerson(data)).then(
+              function(d) {
+                alert("Agregada", "Nueva Persona", 30000, "green", "fa fa-check");
+                dialog.close();
+                callBackOnSuccess();
+              },
+              function(xhr) {
+                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+                dialog.close();
+              }
+            );
+          }
+        },
+        {
+          class: "btn btn-danger",
+          label: "Cancelar",
+          action: function(dialog) {
+            dialog.close();
+          }
+        }
+      ]
+    });
+  };
+
+  // Modificar Grupo ------------------------------------------------------------
+  Groups.showDialogModifyPerson = function(data, callBackOnSuccess) {
+    BootstrapDialog.show({
+      title: "Modificar Persona",
+      draggable: true,
+      type: BootstrapDialog.TYPE_WARNING,
+      size: BootstrapDialog.SIZE_NORMAL,
+      message: $('<div id="modify_person"></div>').load(
+        "html/dlg_modPeople.html"
+      ),
+      onshown: function(dialog) {
+        $("#personId").addClass("disabled");
+        $("#personId").prop("disabled", true);
+        $("#personGroupId").val(data.personGroupId);
+        $("#name").val(data.name);
+        $("#userData").val(data.userData);
+      },
+      onhidden: function(dialog) {
+        //
+      },
+      buttons: [
+        {
+          class: "btn btn-success",
+          label: "Aceptar",
+          action: function(dialog) {
+            var data = {};
             data.name = $("#name").val();
             data.personGroupId = $("#personGroupId").val();
             data.userData = $("#userData").val();
