@@ -1,7 +1,7 @@
 var subscriptionKey = "3e1606fa44d54913ac984e2351938e10";
 var urlBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/";
 
-function detectFace (img) {
+function detectFace(img) {
   var params = {
     returnFaceId: "true",
     returnFaceLandmarks: "false",
@@ -18,9 +18,34 @@ function detectFace (img) {
     contentType: false,
     processData: false,
     type: "POST",
-    data: img 
+    data: img
   });
-};
+}
+
+function getGroups() {
+  return $.ajax({
+    url: urlBase + "persongroups",
+    beforeSend: function(xhrObj) {
+      // Request headers
+      xhrObj.setRequestHeader("Content-Type", "application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "GET"
+  });
+}
+
+function createGroup(data) {
+  return $.ajax({
+    url: urlBase + "persongroups/" + data.personGroupId,
+    beforeSend: function(xhrObj) {
+      // Request headers
+      xhrObj.setRequestHeader("Content-Type", "application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "PUT",
+    data: JSON.stringify(data)
+  });
+}
 
 //Funciones extra
 var parseBinary = function(dataURI) {
