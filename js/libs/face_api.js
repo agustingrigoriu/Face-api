@@ -79,6 +79,16 @@ function trainGroup(personGroupId) {
     type: "POST"
   });
 }
+
+function trainingStatusGroup(personGroupId) {
+  return $.ajax({
+    url: urlBase + "persongroups/" + personGroupId + "/training",
+    beforeSend: function(xhrObj) {
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "GET"
+  });
+}
 //Funciones extra
 var parseBinary = function(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string

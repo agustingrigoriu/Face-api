@@ -109,6 +109,26 @@
         }
       );
     });
+
+    $("#trainingStatus").click(function() {
+      var callBack = function() {
+        refreshGroupsTable();
+      };
+
+      var data = $("#groups-table").tabulator("getSelectedData");
+
+      $.when(trainingStatusGroup(data[0].personGroupId)).then(
+        function(d) {
+          alert(JSON.stringify(d), "Train", 30000, "green", "fa fa-check");
+          dialog.close();
+          callBackOnSuccess();
+        },
+        function(xhr) {
+          alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+          dialog.close();
+        }
+      );
+    });
   };
 
   //******************************FUNCIONES******************************
@@ -128,6 +148,8 @@
     $("#deleteGroup").prop("disabled", true);
     $("#trainGroup").addClass("disabled");
     $("#trainGroup").prop("disabled", true);
+    $("#trainingStatus").addClass("disabled");
+    $("#trainingStatus").prop("disabled", true);
   };
 
   var rowSelectedGroup = function() {
@@ -137,6 +159,8 @@
     $("#deleteGroup").prop("disabled", false);
     $("#trainGroup").removeClass("disabled");
     $("#trainGroup").prop("disabled", false);
+    $("#trainingStatus").removeClass("disabled");
+    $("#trainingStatus").prop("disabled", false);
   };
 
   var alert = function(msg, title, timeout, color, icon) {
