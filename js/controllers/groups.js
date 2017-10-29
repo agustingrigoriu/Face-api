@@ -11,7 +11,7 @@
   var initializeGroupsTabulator = function() {
     var table = $("#groups-table");
 
-    $("#people-table").addClass('tabulator-load-msg');
+    $("#people-table").addClass("tabulator-load-msg");
 
     table.tabulator({
       headerFilterPlaceholder: "",
@@ -50,11 +50,11 @@
       },
       rowClick: function(e, row) {
         var d = row.row.data;
-        
+
         $.when(getPeople(d.personGroupId)).then(function(data) {
           $("#countPeople").html('<i class="fa fa-users"></i> ' + data.length);
           $("#people-table").tabulator("setData", data);
-          $("#actualPersonGroupId").val(d.personGroupId.toUpperCase());
+          $("#actualPersonGroupId").val(d.personGroupId );
         });
       }
     });
@@ -62,7 +62,7 @@
     $.when(getGroups()).then(function(data) {
       $("#countGroups").html('<i class="fa fa-users"></i> ' + data.length);
       table.tabulator("setData", data);
-      $("#people-table").removeClass('tabulator-loading');
+      $("#people-table").removeClass("tabulator-loading");
     });
   };
 
@@ -156,7 +156,7 @@
           callBackOnSuccess();
         },
         function(xhr) {
-          alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+          alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
           dialog.close();
         }
       );
@@ -176,7 +176,7 @@
           callBackOnSuccess();
         },
         function(xhr) {
-          alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+          alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
           dialog.close();
         }
       );
@@ -210,6 +210,15 @@
 
       var data = $("#people-table").tabulator("getSelectedData");
       Groups.showDialogModifyPerson(data[0], callBack);
+    });
+
+    $("#addFace").click(function() {
+      var callBack = function() {
+        refreshPeopleTable();
+      };
+
+      var data = $("#people-table").tabulator("getSelectedData");
+      Groups.showDialogAddFace(data[0], callBack);
     });
   };
 
@@ -259,6 +268,8 @@
     $("#modifyPerson").prop("disabled", true);
     $("#deletePerson").addClass("disabled");
     $("#deletePerson").prop("disabled", true);
+    $("#addFace").addClass("disabled");
+    $("#addFace").prop("disabled", true);
   };
 
   var rowSelectedPerson = function() {
@@ -266,6 +277,8 @@
     $("#modifyPerson").prop("disabled", false);
     $("#deletePerson").removeClass("disabled");
     $("#deletePerson").prop("disabled", false);
+    $("#addFace").removeClass("disabled");
+    $("#addFace").prop("disabled", false);
   };
 
   var alert = function(msg, title, timeout, color, icon) {
@@ -305,7 +318,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -365,7 +378,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -425,7 +438,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -477,7 +490,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -538,7 +551,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -600,10 +613,66 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-cross");
+                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
                 dialog.close();
               }
             );
+          }
+        },
+        {
+          class: "btn btn-danger",
+          label: "Cancelar",
+          action: function(dialog) {
+            dialog.close();
+          }
+        }
+      ]
+    });
+  };
+
+  // Agregar Cara ------------------------------------------------------------
+  Groups.showDialogAddFace = function(data, callBackOnSuccess) {
+    BootstrapDialog.show({
+      title: "Agregar Cara",
+      draggable: true,
+      size: BootstrapDialog.SIZE_NORMAL,
+      message: $('<div id="agregar_cara"></div>').load(
+        "html/dlg_modAddFace.html"
+      ),
+      onshown: function(dialog) {},
+      onhidden: function(dialog) {},
+      buttons: [
+        {
+          class: "btn btn-success",
+          label: "Agregar",
+          action: function(dialog) {
+            var file = $("#faceUpload")[0].files[0];
+            var personGroupId = $("#actualPersonGroupId").val();
+            var personId = data.personId;
+            if (file) {
+              var reader = new FileReader();
+              reader.readAsDataURL(file);
+              reader.onload = function(e) {
+                var imageParsedBinary = parseBinary(e.target.result);
+                $.when(addFace(personGroupId, personId, imageParsedBinary)).then(
+                  function(d) {
+                    alert(
+                      "Modificado con éxito",
+                      "Modificar Persona",
+                      30000,
+                      "green",
+                      "fa fa-check"
+                    );
+                    dialog.close();
+                    callBackOnSuccess();
+                  },
+                  function(xhr) {
+                    alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+                    dialog.close();
+                  }
+                );
+              };
+            }
           }
         },
         {

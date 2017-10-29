@@ -142,19 +142,15 @@ function getPeople(personGroupId) {
   });
 }
 
-function addFace(data, img) {
+function addFace(personGroupId, personId, img) {
   return $.ajax({
-    url:
-      urlBase +
-      "persongroups/" +
-      data.personGroupId +
-      "/persons/" +
-      data.personId +
-      "persistedFaces",
+    url: urlBase + "persongroups/" + personGroupId + "/persons/" + personId + "/persistedFaces",
     beforeSend: function(xhrObj) {
       xhrObj.setRequestHeader("Content-Type", "application/octet-stream");
       xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
     },
+    contentType: false,
+    processData: false,
     type: "POST",
     data: img
   });
