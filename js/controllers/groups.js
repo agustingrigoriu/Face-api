@@ -16,7 +16,7 @@
     table.tabulator({
       headerFilterPlaceholder: "",
       selectable: 1,
-      height: "300px",
+      height: "200px",
       layout: "fitColumns",
       responsiveLayout: true,
       tooltips: true,
@@ -72,7 +72,7 @@
     table.tabulator({
       headerFilterPlaceholder: "",
       selectable: 1,
-      height: "300px",
+      height: "200px",
       layout: "fitColumns",
       responsiveLayout: true,
       tooltips: true,
@@ -220,6 +220,23 @@
       var data = $("#people-table").tabulator("getSelectedData");
       Groups.showDialogAddFace(data[0], callBack);
     });
+
+    $("#identify").click(function() {
+      var data = $("#groups-table").tabulator("getSelectedData")[0];
+      var d = {};
+      d.personGroupId = data.personGroupId;
+      d.faceIds = [];
+      d.faceIds.push($("#faceId").val());
+      d.maxNumOfCandidatesReturned = 1;
+      d.confidenceThreshold = 0.5;
+
+      $.when(identifyFace(d)).then(function(data) {
+        BootstrapDialog.show({
+          title: 'Resultados',
+          message: JSON.stringify(data)
+      });
+      });
+    });
   };
 
   //******************************FUNCIONES******************************
@@ -250,6 +267,8 @@
     $("#trainGroup").prop("disabled", true);
     $("#trainingStatus").addClass("disabled");
     $("#trainingStatus").prop("disabled", true);
+    $("#identify").addClass("disabled");
+    $("#identify").prop("disabled", true);
   };
 
   var rowSelectedGroup = function() {
@@ -261,6 +280,8 @@
     $("#trainGroup").prop("disabled", false);
     $("#trainingStatus").removeClass("disabled");
     $("#trainingStatus").prop("disabled", false);
+    $("#identify").removeClass("disabled");
+    $("#identify").prop("disabled", false);
   };
 
   var rowDeselectedPerson = function() {

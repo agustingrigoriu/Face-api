@@ -144,7 +144,13 @@ function getPeople(personGroupId) {
 
 function addFace(personGroupId, personId, img) {
   return $.ajax({
-    url: urlBase + "persongroups/" + personGroupId + "/persons/" + personId + "/persistedFaces",
+    url:
+      urlBase +
+      "persongroups/" +
+      personGroupId +
+      "/persons/" +
+      personId +
+      "/persistedFaces",
     beforeSend: function(xhrObj) {
       xhrObj.setRequestHeader("Content-Type", "application/octet-stream");
       xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
@@ -156,6 +162,18 @@ function addFace(personGroupId, personId, img) {
   });
 }
 
+function identifyFace(data) {
+  return $.ajax({
+    url: urlBase + "identify",
+    beforeSend: function(xhrObj) {
+      // Request headers
+      xhrObj.setRequestHeader("Content-Type", "application/json");
+      xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+    },
+    type: "POST",
+    data: JSON.stringify(data)
+  });
+}
 //Funciones extra
 var parseBinary = function(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string

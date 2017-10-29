@@ -49,8 +49,8 @@
             <article class="col-sm-12">
 
               <div style="margin: 5px 0px 7px 0px;">
-                <i class="fa-fw fa fa-info"></i> El control de servidores se realiza mediante el comando
-                <strong>PING</strong>
+                <i class="fa-fw fa fa-info"></i> Listado de los grupos que se fueron creando, estos grupos poseen a su vez personas. Puede entrenarlos
+                y verificar el estado de entrenamiento
               </div>
             </article>
 
@@ -116,8 +116,8 @@
           <div class="widget-body no-padding">
             <article class="col-sm-12">
               <div style="margin: 5px 0px 7px 0px;">
-                <i class="fa-fw fa fa-info"></i> El control de los servidores Dicom se realiza mediante
-                <strong>Dicom Echo</strong>
+                <i class="fa-fw fa fa-info"></i> Listado de personas de un grupo, se pueden agregar, modificar y eliminar, además de cargar una cara
+                a una persona.
               </div>
             </article>
             <div class="table-toolbar">
@@ -157,6 +157,55 @@
 
   </div>
 
+  <div class="row">
+
+    <!-- NEW WIDGET START -->
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+
+      <!-- Widget ID (each widget will need unique ID)-->
+
+      <div class="jarviswidget jarviswidget-color-blueDark" id="jwd-0" data-widget-editbutton="false" data-widget-collapsed="false"
+        data-widget-deletebutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false">
+        <header>
+          <h2>Identificar Cara</h2>
+        </header>
+
+        <div style="padding: 9px 13px;">
+          <!-- widget content -->
+          <div class="widget-body">
+            <div class="smart-form">
+              <div class="row">
+
+                <div class="col col-12">
+                  <div style="margin: 5px 0px 7px 0px;">
+                    <i class="fa-fw fa fa-info"></i> Seleccione un grupo de la tabla correspondiente e ingrese el faceId obtenido en Detect para realizar
+                    la comparación contra las personas del grupo seleccionado
+                  </div>
+                  <label for="faceId">Face ID</label>
+                  <input id="faceId" type="text">
+
+                  <p style="text-align: center;">
+                    <button class="btn btn-primary btn-sm disabled" id="identify" disabled>
+                      Identificar
+                    </button>
+                    <!-- <i id="loadingButton" class="fa fa-gear fa-4x fa-spin"></i> -->
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- end widget content -->
+
+      </div>
+      <!-- end widget div -->
+    </article>
+  </div>
+  <!-- end widget -->
+
+
+  </div>
 
 </section>
 
