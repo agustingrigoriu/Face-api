@@ -11,8 +11,6 @@
   var initializeGroupsTabulator = function() {
     var table = $("#groups-table");
 
-    $("#people-table").addClass("tabulator-load-msg");
-
     table.tabulator({
       headerFilterPlaceholder: "",
       selectable: 1,
@@ -108,6 +106,9 @@
   };
 
   var setupEvents = function() {
+    //Escondo botón de loading
+    $("#loadingButtonIdentify").hide();
+
     $(window).resize(function() {
       $(".tabulator").tabulator("redraw");
     });
@@ -151,12 +152,12 @@
 
       $.when(trainGroup(data[0].personGroupId)).then(
         function(d) {
-          alert("Entrenando", "Train", 30000, "green", "fa fa-check");
+          alert("Entrenando", "Train", 10000, "green", "fa fa-check");
           dialog.close();
           callBackOnSuccess();
         },
         function(xhr) {
-          alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+          alert(xhr.responseText, "Error!", 10000, "red", "fa fa-times");
           dialog.close();
         }
       );
@@ -171,12 +172,12 @@
 
       $.when(trainingStatusGroup(data[0].personGroupId)).then(
         function(d) {
-          alert(JSON.stringify(d), "Train", 30000, "green", "fa fa-check");
+          alert(JSON.stringify(d), "Train", 10000, "green", "fa fa-check");
           dialog.close();
           callBackOnSuccess();
         },
         function(xhr) {
-          alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+          alert(xhr.responseText, "Error!", 10000, "red", "fa fa-times");
           dialog.close();
         }
       );
@@ -222,6 +223,8 @@
     });
 
     $("#identify").click(function() {
+      $("#loadingButtonIdentify").show();
+      $("#identify").hide();
       var data = $("#groups-table").tabulator("getSelectedData")[0];
       var d = {};
       d.personGroupId = data.personGroupId;
@@ -231,10 +234,9 @@
       d.confidenceThreshold = 0.5;
 
       $.when(identifyFace(d)).then(function(data) {
-        BootstrapDialog.show({
-          title: 'Resultados',
-          message: JSON.stringify(data)
-      });
+        $("#loadingButtonIdentify").hide();
+        $("#identify").show();
+        Groups.showDialogCandidates(data);
       });
     });
   };
@@ -269,6 +271,8 @@
     $("#trainingStatus").prop("disabled", true);
     $("#identify").addClass("disabled");
     $("#identify").prop("disabled", true);
+    $("#newPerson").addClass("disabled");
+    $("#newPerson").prop("disabled", true);
   };
 
   var rowSelectedGroup = function() {
@@ -282,6 +286,8 @@
     $("#trainingStatus").prop("disabled", false);
     $("#identify").removeClass("disabled");
     $("#identify").prop("disabled", false);
+    $("#newPerson").removeClass("disabled");
+    $("#newPerson").prop("disabled", false);
   };
 
   var rowDeselectedPerson = function() {
@@ -334,12 +340,12 @@
             data.userData = $("#userData").val();
             $.when(createGroup(data)).then(
               function(d) {
-                alert("Agregado", "Nuevo Grupo", 30000, "green", "fa fa-check");
+                alert("Agregado", "Nuevo Grupo", 10000, "green", "fa fa-check");
                 dialog.close();
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+                alert(xhr.responseText, "Error!", 10000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -391,7 +397,7 @@
                 alert(
                   "Modificado",
                   "Modificar Grupo",
-                  30000,
+                  10000,
                   "green",
                   "fa fa-check"
                 );
@@ -399,7 +405,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+                alert(xhr.responseText, "Error!", 10000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -451,7 +457,7 @@
                 alert(
                   "Eliminación exitosa",
                   "Eliminar Grupo",
-                  30000,
+                  10000,
                   "green",
                   "fa fa-check"
                 );
@@ -459,7 +465,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+                alert(xhr.responseText, "Error!", 10000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -503,7 +509,7 @@
                 alert(
                   "Agregada",
                   "Nueva Persona",
-                  30000,
+                  10000,
                   "green",
                   "fa fa-check"
                 );
@@ -511,7 +517,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+                alert(xhr.responseText, "Error!", 10000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -564,7 +570,7 @@
                 alert(
                   "Modificado con éxito",
                   "Modificar Persona",
-                  30000,
+                  10000,
                   "green",
                   "fa fa-check"
                 );
@@ -572,7 +578,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+                alert(xhr.responseText, "Error!", 10000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -626,7 +632,7 @@
                 alert(
                   "Eliminación exitosa",
                   "Eliminar Persona",
-                  30000,
+                  10000,
                   "green",
                   "fa fa-check"
                 );
@@ -634,7 +640,7 @@
                 callBackOnSuccess();
               },
               function(xhr) {
-                alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+                alert(xhr.responseText, "Error!", 10000, "red", "fa fa-times");
                 dialog.close();
               }
             );
@@ -682,7 +688,7 @@
                     alert(
                       "Modificado con éxito",
                       "Modificar Persona",
-                      30000,
+                      10000,
                       "green",
                       "fa fa-check"
                     );
@@ -693,7 +699,7 @@
                     alert(
                       xhr.responseText,
                       "Error!",
-                      30000,
+                      10000,
                       "red",
                       "fa fa-times"
                     );
@@ -746,7 +752,7 @@
                     alert(
                       "Modificado con éxito",
                       "Modificar Persona",
-                      30000,
+                      10000,
                       "green",
                       "fa fa-check"
                     );
@@ -757,7 +763,7 @@
                     alert(
                       xhr.responseText,
                       "Error!",
-                      30000,
+                      10000,
                       "red",
                       "fa fa-times"
                     );
@@ -771,6 +777,31 @@
         {
           class: "btn btn-danger",
           label: "Cancelar",
+          action: function(dialog) {
+            dialog.close();
+          }
+        }
+      ]
+    });
+  };
+
+  //Show candidates ------------------------------------------------------------
+  Groups.showDialogCandidates = function(results) {
+    BootstrapDialog.show({
+      title: "Resultados de Candidatos",
+      draggable: true,
+      size: BootstrapDialog.SIZE_NORMAL,
+      message: $('<div id="candidates"></div>').load(
+        "html/dlg_modCandidates.html"
+      ),
+      onshown: function(dialog) {
+        $("#candidatesResults").val(JSON.stringify(results, null, 2));
+      },
+      onhidden: function(dialog) {},
+      buttons: [
+        {
+          class: "btn btn-success",
+          label: "Agregar",
           action: function(dialog) {
             dialog.close();
           }
