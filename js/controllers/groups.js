@@ -52,9 +52,9 @@
         var d = row.row.data;
 
         $.when(getPeople(d.personGroupId)).then(function(data) {
-          $("#countPeople").html('<i class="fa fa-users"></i> ' + data.length);
+          $("#countPeople").html('<i class="fa fa-user"></i> ' + data.length);
           $("#people-table").tabulator("setData", data);
-          $("#actualPersonGroupId").val(d.personGroupId );
+          $("#actualPersonGroupId").val(d.personGroupId);
         });
       }
     });
@@ -236,7 +236,7 @@
     var table = $("#people-table");
     var personGroupId = $("#actualPersonGroupId").val();
     $.when(getPeople(personGroupId)).then(function(data) {
-      $("#countPeople").html('<i class="fa fa-users"></i> ' + data.length);
+      $("#countPeople").html('<i class="fa fa-user"></i> ' + data.length);
       $("#people-table").tabulator("setData", data);
     });
   };
@@ -654,7 +654,9 @@
               reader.readAsDataURL(file);
               reader.onload = function(e) {
                 var imageParsedBinary = parseBinary(e.target.result);
-                $.when(addFace(personGroupId, personId, imageParsedBinary)).then(
+                $.when(
+                  addFace(personGroupId, personId, imageParsedBinary)
+                ).then(
                   function(d) {
                     alert(
                       "Modificado con éxito",
@@ -667,7 +669,77 @@
                     callBackOnSuccess();
                   },
                   function(xhr) {
-                    alert(xhr.responseText, "Error!", 30000, "red", "fa fa-times");
+                    alert(
+                      xhr.responseText,
+                      "Error!",
+                      30000,
+                      "red",
+                      "fa fa-times"
+                    );
+                    dialog.close();
+                  }
+                );
+              };
+            }
+          }
+        },
+        {
+          class: "btn btn-danger",
+          label: "Cancelar",
+          action: function(dialog) {
+            dialog.close();
+          }
+        }
+      ]
+    });
+  };
+
+  // Verify Face ------------------------------------------------------------
+  Groups.showDialogVerifyFace = function(data, callBackOnSuccess) {
+    BootstrapDialog.show({
+      title: "Agregar Cara",
+      draggable: true,
+      size: BootstrapDialog.SIZE_NORMAL,
+      message: $('<div id="agregar_cara"></div>').load(
+        "html/dlg_modAddFace.html"
+      ),
+      onshown: function(dialog) {},
+      onhidden: function(dialog) {},
+      buttons: [
+        {
+          class: "btn btn-success",
+          label: "Agregar",
+          action: function(dialog) {
+            var file = $("#faceUpload")[0].files[0];
+            var personGroupId = $("#actualPersonGroupId").val();
+            var personId = data.personId;
+            if (file) {
+              var reader = new FileReader();
+              reader.readAsDataURL(file);
+              reader.onload = function(e) {
+                var imageParsedBinary = parseBinary(e.target.result);
+                $.when(
+                  addFace(personGroupId, personId, imageParsedBinary)
+                ).then(
+                  function(d) {
+                    alert(
+                      "Modificado con éxito",
+                      "Modificar Persona",
+                      30000,
+                      "green",
+                      "fa fa-check"
+                    );
+                    dialog.close();
+                    callBackOnSuccess();
+                  },
+                  function(xhr) {
+                    alert(
+                      xhr.responseText,
+                      "Error!",
+                      30000,
+                      "red",
+                      "fa fa-times"
+                    );
                     dialog.close();
                   }
                 );
