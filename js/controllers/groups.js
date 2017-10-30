@@ -763,7 +763,7 @@
                     alert(
                       xhr.responseText,
                       "Error!",
-                      10000,
+                      10000 ,
                       "red",
                       "fa fa-times"
                     );

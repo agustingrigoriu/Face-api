@@ -14,11 +14,18 @@
       var file = $("#imgUpload")[0].files[0];
       var img = $("#img");
       if (file) {
+        $("#detect").removeClass("disabled");
+        $("#detect").prop("disabled", false);
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(e) {
           img.attr("src", e.target.result);
         };
+      }
+      else {
+        $("#detect").addClass("disabled");
+        $("#detect").prop("disabled", true);
+        img.attr('src', 'img/user.svg');
       }
     });
 
