@@ -36,6 +36,7 @@
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(e) {
+          $("#results").val('');
           $("#loadingButton").show();
           $("#detect").hide();
 
