@@ -230,8 +230,8 @@
       d.personGroupId = data.personGroupId;
       d.faceIds = [];
       d.faceIds.push($("#faceId").val());
-      d.maxNumOfCandidatesReturned = 1;
-      d.confidenceThreshold = 0.5;
+      d.maxNumOfCandidatesReturned = 5;
+      d.confidenceThreshold = 0.2;
 
       $.when(identifyFace(d)).then(function(data) {
         $("#loadingButtonIdentify").hide();
@@ -801,7 +801,7 @@
       buttons: [
         {
           class: "btn btn-success",
-          label: "Agregar",
+          label: "Cerrar",
           action: function(dialog) {
             dialog.close();
           }
